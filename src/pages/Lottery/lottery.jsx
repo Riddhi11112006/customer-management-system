@@ -7,7 +7,7 @@ function Lottery() {
   const [data, setData] = useState([]);
 const [filteredData, setFilteredData] = useState([]);
   useEffect(() => {
-    fetch('http://localhost:8081/lottery')
+    fetch('https://customer-management-system-vvsh.onrender.com/lottery')
       .then(res => res.json())
       .then(data => {setData(data);setFilteredData(data);})
       .catch(err => console.log(err));

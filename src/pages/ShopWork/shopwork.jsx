@@ -5,7 +5,7 @@ function ShopWork () {
   const [data, setData] = React.useState([]);
   const [filteredData, setFilteredData] = useState([]);
   useEffect(() => {
-    fetch('http://localhost:8081/users')
+    fetch('https://customer-management-system-vvsh.onrender.com/users')
       .then(res => res.json())
       .then(data => {setData(data);setFilteredData(data);})
       .catch(err => console.log(err));
