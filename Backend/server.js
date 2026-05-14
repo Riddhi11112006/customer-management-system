@@ -1,5 +1,5 @@
 const express = require('express');
-const mysql = require('mysql2');
+const { Pool } = require('pg');
 const cors = require('cors');
 
 const app = express();
@@ -7,11 +7,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'csc'
+const db = new Pool({
+  connectionString: 'postgresql://postgres.kfpoadcfcwrdszfopizr:Abhijeet8806@aws-1-ap-southeast-2.pooler.supabase.com:5432/postgres',
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 
@@ -35,7 +35,7 @@ app.get('/users', (req, res) => {
             return res.json(err);
         }
 
-        return res.json(data);
+        return res.json(data.rows);
 
     });
 
@@ -47,9 +47,9 @@ app.get('/users', (req, res) => {
 app.post('/add_user', (req, res) => {
 
     const sql = `
-        INSERT INTO users
-        (name, mobile, work, Application_No, Document_No, date, Status)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+INSERT INTO users
+(name, mobile, "work", "Application_No", "Document_No", date, "Status")
+VALUES ($1, $2, $3, $4, $5, $6, $7)
     `;
 
     const values = [
@@ -65,7 +65,7 @@ app.post('/add_user', (req, res) => {
     db.query(sql, values, (err, result) => {
 
         if(err) {
-            console.log(err);
+            console.log(err.message);
             return res.json(err);
         }
 
@@ -80,7 +80,7 @@ app.post('/add_user', (req, res) => {
 // DELETE USER
 app.delete('/delete_user/:id', (req, res) => {
 
-    const sql = "DELETE FROM users WHERE id = ?";
+    const sql = "DELETE FROM users WHERE id = $1";
 
     const id = req.params.id;
 
@@ -104,8 +104,14 @@ app.put('/update_user/:id', (req, res) => {
 
     const sql = `
         UPDATE users
-        SET name=?, mobile=?, work=?, Application_No=?, Document_No=?, date=?, Status=?
-        WHERE id=?
+        SET name=$1,
+mobile=$2,
+work=$3,
+"Application_No"=$4,
+"Document_No"=$5,
+date=$6,
+"Status"=$7
+WHERE id=$8
     `;
 
     const values = [
@@ -145,7 +151,7 @@ app.get('/lottery', (req, res) => {
             return res.json(err);
         }
 
-        return res.json(data);
+        return res.json(data.rows);
 
     });
 
@@ -159,7 +165,7 @@ app.post('/add_lottery', (req, res) => {
     const sql = `
         INSERT INTO lottery
         (name, mobile,date, budget)
-        VALUES (?, ?, ?, ?)
+        VALUES ($1, $2, $3, $4)
     `;
 
     const values = [
@@ -209,8 +215,11 @@ app.put('/update_lottery/:id', (req, res) => {
 
     const sql = `
         UPDATE lottery
-        SET name=?, mobile=?, date=?, budget=?
-        WHERE id=?
+        SET name=$1,
+mobile=$2,
+date=$3,
+budget=$4
+WHERE id=$5
     `;
 
     const values = [

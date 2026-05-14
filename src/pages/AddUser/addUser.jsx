@@ -32,7 +32,7 @@ const AddUser = ({ onSubmit, onClose }) => {
   try {
 
     const res = await axios.post(
-      'http://localhost:8081/add_user',
+      'https://customer-management-system-vvsh.onrender.com/add_user',
       {
         name: form.name,
         mobile: form.mobile,
