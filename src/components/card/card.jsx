@@ -1,0 +1,72 @@
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import CardActionArea from '@mui/material/CardActionArea';
+import './card.css';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import AddUser from '../../pages/AddUser/addUser';
+import AddLottery from '../../pages/AddLottery/addLottery';
+
+const cards = [
+  {
+    id: 1,
+    title: 'Add User',
+    description: 'Click to add a user',
+    type: 'addUser'
+  },
+  {
+    id: 2,
+    title: 'lottery name',
+    description: 'Click to add a lottery name',
+    type: 'addLottery'
+  }
+];
+
+function SelectActionCard({ onActionClick }) {
+  const [selectedCard, setSelectedCard] = React.useState(0);
+  return (
+    <Box
+      sx={{
+        width: '100%',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(min(200px, 100%), 1fr))',
+        gap: 2,
+      }}
+    >
+      {cards.map((card, index) => (
+        <Card key={card.id}>
+          <CardActionArea
+            onClick={() => {
+  setSelectedCard(index);
+  onActionClick(card.type);
+}}
+            data-active={selectedCard === index ? '' : undefined}
+            sx={{
+              height: '100%',
+              '&[data-active]': {
+                backgroundColor: 'action.selected',
+                '&:hover': {
+                  backgroundColor: 'action.selectedHover',
+                },
+              },
+            }}
+          >
+            <CardContent sx={{ height: '100%' }}>
+              <Typography variant="h5" component="div">
+                {card.title}
+              </Typography>
+              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                {card.description}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      ))}
+    </Box>
+  );
+}
+
+export default SelectActionCard;
