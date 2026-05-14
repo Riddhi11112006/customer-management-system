@@ -1,5 +1,4 @@
 import React,{useEffect,useState} from 'react';
-import axios from 'axios';
 import SearchBar from '../../components/SearchBar/searchbar';
 import Winner from'../../components/Winner/winner';
 

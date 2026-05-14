@@ -99,14 +99,7 @@ export default function PersistentDrawerLeft() {
   const [currentPage, setCurrentPage] = React.useState("Home");
 const [showAddUser, setShowAddUser] = React.useState(false);
 const [showAddLottery, setShowAddLottery] = React.useState(false);
-const [users, setUsers] = React.useState([]);
 
-const handleAddUser = (newUser) => {
-  setUsers(prev => [...prev, newUser]);
-};
-const handleAddLottery = (newLottery) => {
-  setUsers(prev => [...prev, newLottery]);
-};
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -254,7 +247,7 @@ const handleAddLottery = (newLottery) => {
       onClose={() => setShowAddUser(false)}
     >
       <AddUser
-        onSubmit={handleAddUser}
+        onSubmit={() => {}}
         onClose={() => setShowAddUser(false)}
       />
     </Dialog>
@@ -265,7 +258,7 @@ const handleAddLottery = (newLottery) => {
     onClose={() => setShowAddLottery(false)}
   >
     <Addlottery
-      onSubmit={handleAddLottery}
+      onSubmit={() => {}}
       onClose={() => setShowAddLottery(false)}
     />
   </Dialog>

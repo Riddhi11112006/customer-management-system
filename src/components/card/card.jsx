@@ -5,11 +5,6 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import './card.css';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import AddUser from '../../pages/AddUser/addUser';
-import AddLottery from '../../pages/AddLottery/addLottery';
-
 const cards = [
   {
     id: 1,
