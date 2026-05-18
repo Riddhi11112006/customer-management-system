@@ -3,6 +3,7 @@ import uidai from './assets/uidai.png';
 import digitalseva from './assets/Digitalseva.png';
 import Pancard from './assets/Pancard.png';
 import Safar from './assets/Safar.png';
+import Admission from'./assets/Admission.png'
 
 const websites = [
   {
@@ -25,6 +26,11 @@ const websites = [
     name: "Safar",
     image: Safar,
     link: "https://cscsafar.in/"
+  },
+  {
+    name: "Admission",
+    image: Admission,
+    link: "https://examinationservices.nic.in/ExaminationServices/"
   }
 ];
 
