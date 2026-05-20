@@ -43,7 +43,7 @@ app.get('/users', (req, res) => {
 
 
 // ADD USER
-app.post('/add_user', async (req, res) => {
+app.post('/add_user', (req, res) => {
 
     const sql = `
 INSERT INTO users
@@ -61,37 +61,12 @@ VALUES ($1, $2, $3, $4, $5, $6, $7)
         req.body.Status
     ];
 
-    db.query(sql, values, async (err, result) => {
+    db.query(sql, values,(err, result) => {
 
         if(err) {
             console.log(err.message);
             return res.json(err);
         }
-        console.log("Sending webhook...");
-
-try {
-
-    const response = await fetch("https://hook.us2.make.com/x7uo08jdekrgpk19k4ds59k1bz11b18g", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            name: req.body.name,
-            mobile: req.body.mobile,
-            work: req.body.work,
-            status: req.body.Status
-        })
-    });
-
-    console.log("Webhook status:", response.status);
-
-} catch(error) {
-
-    console.log("Webhook error:", error);
-
-}
-console.log("Webhook sent");
         return res.json("User Added Successfully");
 
     });
