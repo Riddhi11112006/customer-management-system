@@ -9,7 +9,7 @@ const initialForm = {
   Application_No: '',
   Document_No: '',
   date: '',
-  Status: 'Pending'
+  Status: 'choose'
 };
 
 const AddUser = ({ onSubmit, onClose }) => {
@@ -144,7 +144,7 @@ const AddUser = ({ onSubmit, onClose }) => {
   value={form.Status}
   onChange={handleChange}
 >
-  <option value="Pending">Pending</option>
+  <option value="Rejected">Rejected</option>
 <option value="Completed">Completed</option>
 <option value="UnderProcess">Under Process</option> 
 </select>

@@ -15,7 +15,7 @@ function Pending () {
   return (
     
     <div style={{ padding: '20px' }}>
-        <h1>Pending Work</h1>
+        <h1>Rejected Work</h1>
         <SearchBar data={data} setFilteredData={setFilteredData} />
       <table
         border="1"
@@ -44,7 +44,7 @@ function Pending () {
         </thead>
         <tbody>
   {filteredData
-    .filter((d) => d.Status === "Pending")
+    .filter((d) => d.Status === "Rejected")
     .map((d, i) => (
       <tr key={i}>
         <td>{d.id}</td>
