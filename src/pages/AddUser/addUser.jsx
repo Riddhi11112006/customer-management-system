@@ -112,7 +112,7 @@ const AddUser = ({ onSubmit, onClose }) => {
               name="Application_No"
               value={form.Application_No}
               onChange={handleChange}
-              required
+              
             />
           </label>
 <br />
@@ -122,19 +122,19 @@ const AddUser = ({ onSubmit, onClose }) => {
               name="Document_No"
               value={form.Document_No}
               onChange={handleChange}
-              required
+              
             />
           </label>
 <br />
           <label>
             Date:
             <input
-              type="date"
-              name="date"
-              value={form.date}
-              onChange={handleChange}
-              required
-            />
+  type="date"
+  name="date"
+  value={form.date || new Date().toISOString().split("T")[0]}
+  onChange={handleChange}
+  required
+/>
           </label>
 <br />
           <label>
