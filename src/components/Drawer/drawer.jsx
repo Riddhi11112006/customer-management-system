@@ -162,7 +162,7 @@ const [showAddLottery, setShowAddLottery] = React.useState(false);
         </DrawerHeader>
         <Divider />
         <List>
-          {['Home', 'Pending Work', 'Completed Work','Underprocess Work', 'All Customers','Lottery'].map((text, index) => (
+          {['Home', 'Rejected Work', 'Completed Work','Underprocess Work', 'All Customers','Lottery'].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton onClick={() => setCurrentPage(text)}>
                 <ListItemIcon>

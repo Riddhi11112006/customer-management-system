@@ -4,6 +4,7 @@ import SearchBar from '../../components/SearchBar/searchbar';
 
 function Allcust() {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 const [filteredData, setFilteredData] = useState([]);
   useEffect(() => {
     fetch('https://customer-management-system-vvsh.onrender.com/users')
@@ -53,8 +54,8 @@ const handleEdit = (id) => {
               <td>{d.name}</td>
               <td>{d.mobile}</td>
               <td>{d.work}</td>
-              <td>{d.Application_No}</td>
-              <td>{d.Document_No}</td>
+              <td>{d.Application_No || "N/A"}</td>
+              <td>{d.Document_No || "N/A"}</td>
               <td>
                 {new Date(d.date).toLocaleDateString('en-IN', {
                   day: '2-digit',

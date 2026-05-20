@@ -120,6 +120,7 @@ const AddUser = ({ onSubmit, onClose }) => {
             Document No.:
             <input
               name="Document_No"
+              
               value={form.Document_No}
               onChange={handleChange}
               
