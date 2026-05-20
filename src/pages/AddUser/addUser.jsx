@@ -144,6 +144,7 @@ const AddUser = ({ onSubmit, onClose }) => {
   value={form.Status}
   onChange={handleChange}
 >
+  <option value="Choose">Choose</option>
   <option value="Rejected">Rejected</option>
 <option value="Completed">Completed</option>
 <option value="UnderProcess">Under Process</option> 
