@@ -55,7 +55,7 @@ VALUES ($1, $2, $3, $4, $5, $6, $7)
         req.body.work,
         req.body.Application_No,
         req.body.Document_No,
-        req.body.date,
+        req.body.date || null,
         req.body.Status
     ];
 
@@ -116,7 +116,7 @@ WHERE id=$8
         req.body.work,
         req.body.Application_No,
         req.body.Document_No,
-        req.body.date,
+        req.body.date || null,
         req.body.Status
     ];
 
@@ -167,7 +167,7 @@ app.post('/add_lottery', (req, res) => {
     const values = [
         req.body.name,
         req.body.mobile,
-        req.body.date,
+        req.body.date || null,
         req.body.budget
     ];
 
@@ -221,7 +221,7 @@ WHERE id=$5
     const values = [
         req.body.name,
         req.body.mobile,
-        req.body.date,
+        req.body.date || null,
         req.body.budget,
         
     ];

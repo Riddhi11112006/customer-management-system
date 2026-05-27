@@ -39,14 +39,17 @@ const AddUser = ({ onSubmit, onClose }) => {
         work: form.work,
         Application_No: form.Application_No,
         Document_No: form.Document_No,
-        date: form.date,
+        date: form.date || null,
         Status: form.Status
       }
     );
 
-    console.log(res.data);
-
-    alert("User Added Successfully");
+    if(res.data){
+   console.log(res.data);
+   alert("User Added Successfully");
+} else {
+   alert("Insert failed");
+}
 
     setForm(initialForm);
 
@@ -132,7 +135,7 @@ const AddUser = ({ onSubmit, onClose }) => {
             <input
   type="date"
   name="date"
-  value={form.date || new Date().toISOString().split("T")[0]}
+  value={req.body.date || null || new Date().toISOString().split("T")[0]}
   onChange={handleChange}
   required
 />
