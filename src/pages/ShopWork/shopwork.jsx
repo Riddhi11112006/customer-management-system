@@ -43,7 +43,7 @@ function ShopWork () {
         </thead>
         <tbody>
           {filteredData
-  .filter((d) => d.work === "shop work")
+  .filter((d) => d.work?.toLowerCase() === "shop work")
   .map((d, i) => (
             <tr key={i}>
               <td>{d.id}</td>
