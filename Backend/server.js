@@ -204,7 +204,26 @@ app.delete('/clear_lottery', (req, res) => {
 
 });
 
+app.put('/update_status/:id', (req, res) => {
 
+    const sql = `
+        UPDATE users
+        SET "Status" = $1
+        WHERE id = $2
+    `;
+
+    db.query(sql, [req.body.Status, req.params.id], (err, result) => {
+
+        if(err) {
+            console.log(err);
+            return res.json(err);
+        }
+
+        return res.json("Status Updated");
+
+    });
+
+});
 
 // UPDATE USER
 app.put('/update_lottery/:id', (req, res) => {

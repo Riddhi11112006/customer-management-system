@@ -5,10 +5,10 @@ import axios from "axios";
 const initialForm = {
   name: '',
   mobile: '',
-  work: '',
+  work: 'choose',
   Application_No: '',
   Document_No: '',
-  date: '',
+  date: new Date().toISOString().split('T')[0],
   Status: 'choose'
 };
 
@@ -100,6 +100,7 @@ const AddUser = ({ onSubmit, onClose }) => {
   value={form.work}
   onChange={handleChange}
 >
+  <option class="option" value="choose">choose</option>
   <option class="option" value="aadhar card">Aadhar Card</option>
   <option class="option" value="pan card">PAN Card</option>
   <option class="option" value="E-district">E-district</option>

@@ -11,7 +11,34 @@ function Pending () {
       .then(data => {setData(data);setFilteredData(data);})
       .catch(err => console.log(err));
   }, [])
+const handleStatusChange = async (id, status) => {
 
+  try {
+
+    const res = await fetch(
+      `https://customer-management-system-vvsh.onrender.com/update_status/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ Status: status })
+      }
+    );
+
+    const data = await res.json();
+
+    console.log(data);
+
+    window.location.reload();
+
+  } catch(err) {
+
+    console.log(err);
+
+  }
+
+};
   return (
     
     <div style={{ padding: '20px' }}>
@@ -62,7 +89,16 @@ function Pending () {
           })}
         </td>
 
-        <td>{d.Status}</td>
+        <td>
+  <select
+    value={d.Status}
+    onChange={(e) => handleStatusChange(d.id, e.target.value)}
+  >
+    <option value="Completed">Completed</option>
+    <option value="Rejected">Rejected</option>
+    <option value="Under Process">Under Process</option>
+  </select>
+</td>
       </tr>
     ))}
 </tbody>
