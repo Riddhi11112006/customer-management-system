@@ -43,7 +43,7 @@ function Education () {
         </thead>
         <tbody>
           {filteredData
-  .filter((d) => d.work === "education")
+  .filter((d) => d.work === "Education")
   .map((d, i) => (
             <tr key={i}>
               <td>{d.id}</td>
