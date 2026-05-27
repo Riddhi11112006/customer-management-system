@@ -58,7 +58,16 @@ function Completed () {
                   year: 'numeric'
                 })}
               </td>
-              <td>{d.Status}</td>
+              <td>
+  <select
+    value={d.Status}
+    onChange={(e) => handleStatusChange(d.id, e.target.value)}
+  >
+    <option value="Completed">Completed</option>
+    <option value="Rejected">Rejected</option>
+    <option value="Under Process">Under Process</option>
+  </select>
+</td>
             </tr>
           ))}
         </tbody>
