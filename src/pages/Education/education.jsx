@@ -43,7 +43,7 @@ function Education () {
         </thead>
         <tbody>
           {filteredData
-  .filter((d) => d.work === "Education")
+  .filter((d) => d.work?.toLowerCase() === "Education")
   .map((d, i) => (
             <tr key={i}>
               <td>{d.id}</td>
