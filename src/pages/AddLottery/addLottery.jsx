@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+
+const API_BASE_URL = 'https://customer-management-system-vvsh.onrender.com';
 
 const initialForm = {
   name: '',
@@ -8,9 +10,29 @@ const initialForm = {
   budget: '100-500'
 };
 
-const AddLottery = ({ onSubmit, onClose }) => {
+const formatDateForInput = (date) => {
+  if (!date) return '';
+  return new Date(date).toISOString().split("T")[0];
+};
+
+const AddLottery = ({ initialData, onSubmit, onClose }) => {
 
   const [form, setForm] = useState(initialForm);
+  const isEditing = Boolean(initialData?.id);
+
+  useEffect(() => {
+    if (!initialData) {
+      setForm(initialForm);
+      return;
+    }
+
+    setForm({
+      name: initialData.name || '',
+      mobile: initialData.mobile || '',
+      date: formatDateForInput(initialData.date),
+      budget: initialData.budget || '100-500'
+    });
+  }, [initialData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,21 +49,26 @@ const AddLottery = ({ onSubmit, onClose }) => {
 
   try {
 
-    const res = await axios.post(
-      'https://customer-management-system-vvsh.onrender.com/add_lottery',
-      {
-        name: form.name,
-        mobile: form.mobile,
-        date: form.date,
-        budget: form.budget,
-      }
-    );
+    const payload = {
+      name: form.name,
+      mobile: form.mobile,
+      date: form.date,
+      budget: form.budget,
+    };
+
+    const res = isEditing
+      ? await axios.put(`${API_BASE_URL}/update_lottery/${initialData.id}`, payload)
+      : await axios.post(`${API_BASE_URL}/add_lottery`, payload);
 
     console.log(res.data);
 
-    alert("User Added Successfully");
+    alert(isEditing ? "User Updated Successfully" : "User Added Successfully");
 
     setForm(initialForm);
+
+    if(onSubmit){
+      onSubmit(res.data);
+    }
 
     if(onClose){
       onClose();
@@ -59,7 +86,7 @@ const AddLottery = ({ onSubmit, onClose }) => {
 
       <div className="rentout-modal">
 
-        <h2>Add User</h2>
+        <h2>{isEditing ? "Edit Lottery User" : "Add User"}</h2>
 
         <form className="rentout-form" onSubmit={handleSubmit}>
 
@@ -111,7 +138,7 @@ const AddLottery = ({ onSubmit, onClose }) => {
             type="submit"
             className="rentout-submit"
           >
-            Add User
+            {isEditing ? "Update User" : "Add User"}
           </button>
       
           <button

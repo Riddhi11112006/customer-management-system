@@ -13,6 +13,11 @@ const db = new Pool({
   }
 });
 
+const valueOrNA = (value) => {
+    const trimmed = String(value || '').trim();
+    return trimmed || 'N/A';
+};
+
 
 
 // HOME ROUTE
@@ -55,8 +60,8 @@ VALUES ($1, $2, $3, $4, $5, $6, $7)
         req.body.name,
         req.body.mobile,
         req.body.work,
-        req.body.Application_No,
-        req.body.Document_No,
+        valueOrNA(req.body.Application_No),
+        valueOrNA(req.body.Document_No),
         req.body.date,
         req.body.Status
     ];
@@ -65,7 +70,7 @@ VALUES ($1, $2, $3, $4, $5, $6, $7)
 
         if(err) {
             console.log(err.message);
-            return res.json(err);
+            return res.status(500).json({ error: err.message });
         }
         return res.json("User Added Successfully");
 
@@ -116,8 +121,8 @@ WHERE id=$8
         req.body.name,
         req.body.mobile,
         req.body.work,
-        req.body.Application_No,
-        req.body.Document_No,
+        valueOrNA(req.body.Application_No),
+        valueOrNA(req.body.Document_No),
         req.body.date,
         req.body.Status
     ];
@@ -128,7 +133,11 @@ WHERE id=$8
 
         if(err) {
             console.log(err);
-            return res.json(err);
+            return res.status(500).json({ error: err.message });
+        }
+
+        if(result.rowCount === 0) {
+            return res.status(404).json({ error: "User not found" });
         }
 
         return res.json("User Updated Successfully");

@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './addUser.css';
 import axios from "axios";
+
+const API_BASE_URL = 'https://customer-management-system-vvsh.onrender.com';
 
 const initialForm = {
   name: '',
@@ -9,12 +11,40 @@ const initialForm = {
   Application_No: '',
   Document_No: '',
   date: '',
-  Status: 'choose'
+  Status: 'Choose'
 };
 
-const AddUser = ({ onSubmit, onClose }) => {
+const formatDateForInput = (date) => {
+  if (!date) return '';
+  return new Date(date).toISOString().split("T")[0];
+};
+
+const valueOrNA = (value) => {
+  const trimmed = String(value || '').trim();
+  return trimmed || 'N/A';
+};
+
+const AddUser = ({ initialData, onSubmit, onClose }) => {
 
   const [form, setForm] = useState(initialForm);
+  const isEditing = Boolean(initialData?.id);
+
+  useEffect(() => {
+    if (!initialData) {
+      setForm(initialForm);
+      return;
+    }
+
+    setForm({
+      name: initialData.name || '',
+      mobile: initialData.mobile || '',
+      work: initialData.work || '',
+      Application_No: initialData.Application_No || '',
+      Document_No: initialData.Document_No || '',
+      date: formatDateForInput(initialData.date),
+      Status: initialData.Status || 'Choose'
+    });
+  }, [initialData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,24 +61,33 @@ const AddUser = ({ onSubmit, onClose }) => {
 
   try {
 
-    const res = await axios.post(
-      'https://customer-management-system-vvsh.onrender.com/add_user',
-      {
-        name: form.name,
-        mobile: form.mobile,
-        work: form.work,
-        Application_No: form.Application_No,
-        Document_No: form.Document_No,
-        date: form.date,
-        Status: form.Status
-      }
-    );
+    const payload = {
+      name: form.name,
+      mobile: form.mobile,
+      work: form.work,
+      Application_No: valueOrNA(form.Application_No),
+      Document_No: valueOrNA(form.Document_No),
+      date: form.date,
+      Status: form.Status
+    };
+
+    const res = isEditing
+      ? await axios.put(`${API_BASE_URL}/update_user/${initialData.id}`, payload)
+      : await axios.post(`${API_BASE_URL}/add_user`, payload);
+
+    if (res.data?.error) {
+      throw new Error(res.data.error);
+    }
 
     console.log(res.data);
 
-    alert("User Added Successfully");
+    alert(isEditing ? "User Updated Successfully" : "User Added Successfully");
 
     setForm(initialForm);
+
+    if(onSubmit){
+      await onSubmit(res.data);
+    }
 
     if(onClose){
       onClose();
@@ -66,7 +105,7 @@ const AddUser = ({ onSubmit, onClose }) => {
 
       <div className="rentout-modal">
 
-        <h2>Add User</h2>
+        <h2>{isEditing ? "Edit User" : "Add User"}</h2>
 
         <form className="rentout-form" onSubmit={handleSubmit}>
 
@@ -97,12 +136,12 @@ const AddUser = ({ onSubmit, onClose }) => {
   value={form.work}
   onChange={handleChange}
 >
-  <option class="option" value="aadhar card">Aadhar Card</option>
-  <option class="option" value="pan card">PAN Card</option>
-  <option class="option" value="E-district">E-district</option>
-  <option class="option" value="mcd">MCD</option>
-  <option class="option" value="Education">Education</option>
-  <option class="option" value="Shop work">Shop Work</option>
+  <option className="option" value="aadhar card">Aadhar Card</option>
+  <option className="option" value="pan card">PAN Card</option>
+  <option className="option" value="E-district">E-district</option>
+  <option className="option" value="mcd">MCD</option>
+  <option className="option" value="Education">Education</option>
+  <option className="option" value="Shop work">Shop Work</option>
 </select>
           </label>
 <br />
@@ -156,7 +195,7 @@ const AddUser = ({ onSubmit, onClose }) => {
             type="submit"
             className="rentout-submit"
           >
-            Add User
+            {isEditing ? "Update User" : "Add User"}
           </button>
       
           <button

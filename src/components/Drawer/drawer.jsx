@@ -212,7 +212,7 @@ const [showAddLottery, setShowAddLottery] = React.useState(false);
 <Lottery />
 )
 }
-  {currentPage === "Pending Work" && (
+  {currentPage === "Rejected Work" && (
     <Pending />
   )}
 
