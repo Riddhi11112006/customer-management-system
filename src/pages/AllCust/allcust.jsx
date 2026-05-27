@@ -1,28 +1,19 @@
 import React,{useEffect,useState} from 'react';
 import './allcust.css';
 import SearchBar from '../../components/SearchBar/searchbar';
-import AddUser from '../AddUser/addUser';
-
-const API_BASE_URL = 'https://customer-management-system-vvsh.onrender.com';
 
 function Allcust() {
 const [data, setData] = useState([]);
 const [filteredData, setFilteredData] = useState([]);
-const [editingUser, setEditingUser] = useState(null);
-
-const loadUsers = () => {
-  return fetch(`${API_BASE_URL}/users`)
-    .then(res => res.json())
-    .then(data => {setData(data);setFilteredData(data);})
-    .catch(err => console.log(err));
-};
-
   useEffect(() => {
-    loadUsers();
+    fetch('https://customer-management-system-vvsh.onrender.com/users')
+      .then(res => res.json())
+      .then(data => {setData(data);setFilteredData(data);})
+      .catch(err => console.log(err));
   }, [])
 
-const handleEdit = (user) => {
-  setEditingUser(user);
+const handleEdit = (id) => {
+  console.log("Edit user:", id);
 };
 
   return (
@@ -74,19 +65,12 @@ const handleEdit = (user) => {
               </td>
               <td>{d.Status}</td>
               <td>
-                <button onClick={() => handleEdit(d)}>Edit</button>
+                <button onClick={() => handleEdit(d.id)}>Edit</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      {editingUser && (
-        <AddUser
-          initialData={editingUser}
-          onSubmit={loadUsers}
-          onClose={() => setEditingUser(null)}
-        />
-      )}
     </div>
   )
 }

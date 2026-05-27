@@ -51,8 +51,8 @@ function Underprocess () {
               <td>{d.name}</td>
               <td>{d.mobile}</td>
               <td>{d.work}</td>
-              <td>{d.Application_No || "N/A"}</td>
-              <td>{d.Document_No || "N/A"}</td>
+              <td>{d.Application_No}</td>
+              <td>{d.Document_No}</td>
               <td>{new Date(d.date).toLocaleDateString('en-IN', {
                   day: '2-digit',
                   month: 'long',

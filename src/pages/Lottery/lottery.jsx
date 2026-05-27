@@ -1,28 +1,19 @@
 import React,{useEffect,useState} from 'react';
 import SearchBar from '../../components/SearchBar/searchbar';
 import Winner from'../../components/Winner/winner';
-import AddLottery from '../AddLottery/addLottery';
-
-const API_BASE_URL = 'https://customer-management-system-vvsh.onrender.com';
 
 function Lottery() {
   const [data, setData] = useState([]);
 const [filteredData, setFilteredData] = useState([]);
-const [editingLotteryUser, setEditingLotteryUser] = useState(null);
-
-const loadLottery = () => {
-  fetch(`${API_BASE_URL}/lottery`)
-    .then(res => res.json())
-    .then(data => {setData(data);setFilteredData(data);})
-    .catch(err => console.log(err));
-};
-
   useEffect(() => {
-    loadLottery();
+    fetch('https://customer-management-system-vvsh.onrender.com/lottery')
+      .then(res => res.json())
+      .then(data => {setData(data);setFilteredData(data);})
+      .catch(err => console.log(err));
   }, [])
 
-const handleEdit = (lotteryUser) => {
-  setEditingLotteryUser(lotteryUser);
+const handleEdit = (id) => {
+  console.log("Edit user:", id);
 };
 
   return (
@@ -70,19 +61,12 @@ const handleEdit = (lotteryUser) => {
               </td>
               <td>{d.budget}</td>
               <td>
-                <button onClick={() => handleEdit(d)}>Edit</button>
+                <button onClick={() => handleEdit(d.id)}>Edit</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      {editingLotteryUser && (
-        <AddLottery
-          initialData={editingLotteryUser}
-          onSubmit={loadLottery}
-          onClose={() => setEditingLotteryUser(null)}
-        />
-      )}
     </div>
   )
 }

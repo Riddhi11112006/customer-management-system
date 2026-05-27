@@ -1,29 +1,16 @@
 import React,{useEffect,useState} from 'react'
 import SearchBar from '../../components/SearchBar/searchbar';
-import AddUser from '../AddUser/addUser';
 
-const API_BASE_URL = 'https://customer-management-system-vvsh.onrender.com';
 
 function Pending () {
   const [data, setData] = React.useState([]);
   const [filteredData, setFilteredData] = useState([]);
-
-  const [editingUser, setEditingUser] = useState(null);
-
-  const loadUsers = () => {
-    return fetch(`${API_BASE_URL}/users`)
+  useEffect(() => {
+    fetch('https://customer-management-system-vvsh.onrender.com/users')
       .then(res => res.json())
       .then(data => {setData(data);setFilteredData(data);})
       .catch(err => console.log(err));
-  };
-
-  useEffect(() => {
-    loadUsers();
   }, [])
-
-  const handleEdit = (user) => {
-    setEditingUser(user);
-  };
 
   return (
     
@@ -52,7 +39,6 @@ function Pending () {
             <th>Document_No</th>
             <th>Date</th>
             <th>Status</th>
-            <th>Action</th>
        
           </tr>
         </thead>
@@ -65,8 +51,8 @@ function Pending () {
         <td>{d.name}</td>
         <td>{d.mobile}</td>
         <td>{d.work}</td>
-        <td>{d.Application_No || "N/A"}</td>
-        <td>{d.Document_No || "N/A"}</td>
+        <td>{d.Application_No}</td>
+        <td>{d.Document_No}</td>
 
         <td>
           {new Date(d.date).toLocaleDateString('en-IN', {
@@ -77,20 +63,10 @@ function Pending () {
         </td>
 
         <td>{d.Status}</td>
-        <td>
-          <button onClick={() => handleEdit(d)}>Edit</button>
-        </td>
       </tr>
     ))}
 </tbody>
       </table>
-      {editingUser && (
-        <AddUser
-          initialData={editingUser}
-          onSubmit={loadUsers}
-          onClose={() => setEditingUser(null)}
-        />
-      )}
     </div>
   )
 }

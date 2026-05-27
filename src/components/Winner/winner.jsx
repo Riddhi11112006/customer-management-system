@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const API_BASE_URL = 'https://customer-management-system-vvsh.onrender.com';
-
 function Winner({ data }) {
 
   const [winner, setWinner] = useState({});
@@ -41,7 +39,7 @@ function Winner({ data }) {
   try {
 
     await axios.delete(
-      `${API_BASE_URL}/clear_lottery`
+      'http://localhost:8081/clear_lottery'
     );
 
     alert("Lottery Cleared");
