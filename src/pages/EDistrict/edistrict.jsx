@@ -43,7 +43,7 @@ function EDistrict () {
         </thead>
         <tbody>
           {filteredData
-  .filter((d) => d.work === "e-district")
+  .filter((d) => d.work?.toLowerCase() === "E-District")
   .map((d, i) => (
             <tr key={i}>
               <td>{d.id}</td>
