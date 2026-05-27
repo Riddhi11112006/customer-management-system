@@ -71,7 +71,10 @@ const handleStatusChange = async (id, status) => {
         </thead>
         <tbody>
           {filteredData
-  .filter((d) => d.Status === "UnderProcess")
+.filter(
+  (d) =>
+    d.Status?.toLowerCase().replace(/\s/g, "") === "underprocess"
+)
   .map((d, i) => (
             <tr key={i}>
               <td>{d.id}</td>
