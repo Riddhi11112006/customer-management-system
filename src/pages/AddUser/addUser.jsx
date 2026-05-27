@@ -135,7 +135,7 @@ const AddUser = ({ onSubmit, onClose }) => {
             <input
   type="date"
   name="date"
-  value={req.body.date || null || new Date().toISOString().split("T")[0]}
+  value={form.date || new Date().toISOString().split("T")[0]}
   onChange={handleChange}
   required
 />
