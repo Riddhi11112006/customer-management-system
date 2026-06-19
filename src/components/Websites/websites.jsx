@@ -4,6 +4,8 @@ import digitalseva from './assets/Digitalseva.png';
 import Pancard from './assets/Pancard.png';
 import Safar from './assets/Safar.png';
 import Admission from'./assets/Admission.png'
+import cschealth from './assets/cschealth.png';
+import voter from './assets/voter.png';
 
 const websites = [
   {
@@ -31,7 +33,18 @@ const websites = [
     name: "Admission",
     image: Admission,
     link: "https://examinationservices.nic.in/ExaminationServices/"
+  },
+  {
+    name: "Csc Health",
+    image: cschealth,
+    link: "http://cschealth.in/"
+  },
+  {
+    name: "Voter",
+    image: voter,
+    link: "https://voters.eci.gov.in/"
   }
+
 ];
 
 function Websites() {
