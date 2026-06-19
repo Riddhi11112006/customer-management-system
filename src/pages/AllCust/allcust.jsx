@@ -6,11 +6,24 @@ function Allcust() {
 const [data, setData] = useState([]);
 const [filteredData, setFilteredData] = useState([]);
   useEffect(() => {
-    fetch('https://customer-management-system-vvsh.onrender.com/users')
-      .then(res => res.json())
-      .then(data => {setData(data);setFilteredData(data);})
-      .catch(err => console.log(err));
-  }, [])
+  fetch('https://customer-management-system-vvsh.onrender.com/users')
+    .then(res => res.json())
+    .then(data => {
+
+      console.log(data);
+
+      if(Array.isArray(data)){
+        setData(data);
+        setFilteredData(data);
+      } else {
+        console.log("API returned:", data);
+        setData([]);
+        setFilteredData([]);
+      }
+
+    })
+    .catch(err => console.log(err));
+}, []);
 
 const handleEdit = (id) => {
   console.log("Edit user:", id);
@@ -48,7 +61,8 @@ const handleEdit = (id) => {
           </tr>
         </thead>
         <tbody>
-          {filteredData.map((d, i) => (
+          {Array.isArray(filteredData) &&
+ filteredData.map((d, i) => (
             <tr key={i}>
               <td>{d.id}</td>
               <td>{d.name}</td>
