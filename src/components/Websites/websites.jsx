@@ -6,6 +6,7 @@ import Safar from './assets/Safar.png';
 import Admission from'./assets/Admission.png'
 import cschealth from './assets/cschealth.png';
 import voter from './assets/voter.png';
+import nha from './assets/nha.png';
 
 const websites = [
   {
@@ -43,6 +44,11 @@ const websites = [
     name: "Voter",
     image: voter,
     link: "https://voters.eci.gov.in/"
+  },
+  {
+    name: "NHA",
+    image: nha,
+    link: "https://www.nha.gov.in/"
   }
 
 ];
