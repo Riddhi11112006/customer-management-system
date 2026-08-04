@@ -48,7 +48,7 @@ const websites = [
   {
     name: "NHA",
     image: nha,
-    link: "https://www.nha.gov.in/"
+    link: "https://beneficiary.nha.gov.in/"
   }
 
 ];
